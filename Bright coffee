@@ -1,0 +1,46 @@
+
+---Checking whole table
+SELECT *
+FROM workspace.brightcoffeshop.brightcoffeeshop;
+
+---checking how many rows and no duplicates
+SELECT COUNT(*) AS num_of_rows,
+       COUNT(DISTINCT transaction_id) AS user_id
+FROM workspace.brightcoffeshop.brightcoffeeshop;
+
+--- checking for nulls in the data set
+SELECT COUNT(*) AS NULL_ROWS
+FROM workspace.brightcoffeshop.brightcoffeeshop
+WHERE transaction_id IS NULL;
+
+---checking the start date and end date of the dataset
+SELECT MIN(transaction_date) AS earliest_date,
+        MAX(transaction_date) AS latest_date
+FROM workspace.brightcoffeshop.brightcoffeeshop;
+
+
+---calculating revenue for bright coffee shop
+SELECT ROUND(SUM(transaction_qty * TRY_CAST(REPLACE(unit_price,',','.')AS DOUBLE)),2) AS TOTAL_Revenue
+FROM workspace.brightcoffeshop.brightcoffeeshop;
+
+---calculating the distinct branches
+SELECT DISTINCT store_location,
+                store_id
+
+FROM workspace.brightcoffeshop.brightcoffeeshop;
+
+---Distinct product category
+SELECT DISTINCT product_category
+FROM workspace.brightcoffeshop.brightcoffeeshop;
+
+---Checking the lowest and highest prices in the unit_price column
+SELECT MIN(unit_price) AS Lowest_unit_price,
+       MAX(unit_price) AS highest_unit_price
+FROM workspace.brightcoffeshop.brightcoffeeshop;     
+
+---Checking the total revenue by store location
+SELECT  DISTINCT store_location,
+        ROUND(SUM(transaction_qty * TRY_CAST(REPLACE(unit_price,',','.')AS DOUBLE)),2)
+FROM workspace.brightcoffeshop.brightcoffeeshop
+GROUP BY store_location;
+
